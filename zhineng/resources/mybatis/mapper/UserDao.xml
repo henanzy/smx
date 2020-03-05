@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hnzy.hot.dao.UserDao">
+	<resultMap type="User" id="user">
+		<id property="id" column="ID" />
+		<result property="userName" column="UserName" />
+		<result property="password" column="Password" />
+		<result property="ssgs" column="ssgs" />
+		<result property="type" column="type" />
+	</resultMap>
+	<resultMap id="Map" type="java.util.HashMap"></resultMap>
+	<select id="findUserByNameAndMD5" parameterType="User" resultType="User">
+		select * from T_Userlogin where UserName=#{userName} and PassWord=#{passWord}
+	</select>
+	
+	<select id="findUserPass" parameterType="java.lang.String" resultType="java.lang.String">
+		select PassWord from T_Userlogin  where ID=#{ID} 
+	</select>
+	
+	<update id="update" parameterType="User">
+    update T_Userlogin set UserName=#{userName},PassWord=#{passWord} where ID=#{ID}
+    </update>
+    <select  id="findByName" parameterType="User" resultType="User">
+    select UserName from T_Userlogin where UserName=#{userName}
+    </select>
+    <insert id="InsUsePass"  parameterType="User">
+    insert into T_Userlogin (UserName,Password,role_id) values (#{userName},#{password},#{type})
+    </insert>
+    <select id="getgs" resultType="java.lang.String">
+    select name from qyjg
+    </select>
+    
+    <select id="selGsjg" resultMap="Map">
+    select * from qyjg
+    </select>
+    
+    <insert id="InsGsjg"  >
+    insert into qyjg (name,sjgs) values (#{name},#{sjgs})
+    </insert>
+    
+    <update id="updateGsjg" >
+    update qyjg set name=#{name},sjgs=#{sjgs} where id=#{id}
+    </update>
+    
+    <update id="deleteGsjg" >
+    delete from qyjg  where id=#{id}
+    </update>
+    
+    <select id="getRole" resultMap="Map">
+    select * from U_Role 
+    </select>
+    
+    <select id="getPermission" resultMap="Map">
+    select * from U_Permission 
+    </select>
+    
+    <select id="getRole_Per" resultType="java.lang.String">
+    select per_id from U_RP where role_id= #{id}
+    </select>
+    
+    <insert id="InsRole_Per"  >
+    insert into U_RP (per_id,role_id) values (#{per_id},#{role_id})
+    </insert>
+    
+    <update id="deleteRole_Per" >
+    delete from U_RP  where role_id=#{role_id}
+    </update>
+    
+    <select id="getRoleByName" resultType="java.lang.String">
+    select role_id from T_UserLogin where UserName= #{UserName}
+    </select>
+    
+     <select id="getRoleName" resultType="java.lang.String">
+    select name from U_Role where id= #{id}
+    </select>
+    
+    <select id="getRoleIdByName" resultType="java.lang.Integer">
+    select id from U_Permission where name= #{name}
+    </select>
+</mapper>

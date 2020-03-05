@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hnzy.hot.dao.YhInfoDao">
+	<resultMap id="YhMap" type="java.util.HashMap"></resultMap>
+	<resultMap type="YhInfo" id="yhInfo">
+		<id property="id" column="ID" />
+		<result property="valAd" column="ValAd" />
+		<result property="xqName" column="XqName" />
+		<result property="buildNo" column="BuildNO" />
+		<result property="cellNo" column="CellNO" />
+		<result property="houseNo" column="HouseNO" />
+		<result property="yhName" column="YhName" />
+		<result property="idNum" column="IDNum" />
+		<result property="rbAd" column="RbAd" />
+		<result property="rbType" column="RbType" />
+		<result property="telephone" column="Telephone" />
+		<result property="mobilephone" column="Mobilephone" />
+		<result property="email" column="Email" />
+		<result property="buileArea" column="BuileArea" />
+		<result property="userArea" column="UseArea" />
+		<result property="heatArea" column="HeatArea" />
+		<result property="billway" column="BillWay" />
+		<result property="sfjf" column="SFJF" />
+		<result property="sfqf" column="SFQF" />
+		<result property="sftr" column="SFTR" />
+		<result property="wcad" column="WCAd" />
+		<result property="azwz" column="AZWZ" />
+		<result property="ylfq" column="YLFQ" />
+		<result property="LH" column="LH"/>
+		<result property="dYH" column="DYH"/>
+		<result property="xq" column="XQ"/>
+		<result property="hESName" column="HESName"/>
+		<result property="jfsj" column="JFSJ" />
+		<result property="bz" column="Bz" />
+		<result property="datetime" column="datetime" />
+		<result property="faultInfor" column="FaultInfor" />
+		<result property="yhfl" column="Yhfl" />
+		<result property="cou" column="cou"/>
+		<result property="bjxx" column="Bjxx"/>
+		<result property="bjTime" column="BjTime"/>
+		<result property="LH" column="LH"/>
+		<result property="CS" column="CS"/>
+		<result property="SH" column="SH"/>
+		<result property="jFZT" column="JFZT"/>
+		<result property="yHKH" column="YHKH"/>
+		<result property="yhbm" column="YHBM" />
+		<result property="yhRb" column="YhRb" />
+		<result property="cjq" column="Cjq" />
+		
+	</resultMap>
+	<resultMap id="YhxxMap" type="java.util.HashMap"></resultMap>
+	<sql id="xq">
+		  and Yhfl!='退费停暖'
+		<if test="xqName!='--选择小区名称--'">
+			and XqName=#{xqName}
+		</if>
+		<if test="buildNo!=0">
+			and BuildNO=#{buildNo}
+		</if>
+		<if test="cellNo!=0">
+			and CellNO=#{cellNo}
+		</if>
+		<if test="sfjf!='--选择缴费状态--'">
+			and SFJF=#{sfjf}
+		</if>
+		<if test="status!='--选择阀门状态--'">
+			and Status=#{status}
+		</if>
+		</sql>
+	<select id="findXq" resultMap="YhMap" >
+		select distinct XqName from T_YhInfo where yhrb=0 or yhrb=2
+
+	</select>
+	
+	
+	<select id="findLd" resultMap="YhMap" >
+		select distinct BuildNo from T_YhInfo where XqName=#{xqm} order by BuildNo
+
+	</select>
+	
+	<select id="findDy" resultMap="YhMap" >
+		select distinct CellNo from T_YhInfo where XqName=#{xqm} and BuildNo=#{ldh} order by CellNo
+
+	</select>
+	
+	<select id="findHh" resultMap="YhMap" >
+
+		select HouseNo as name,ValAd as id from T_YhInfo where XqName=#{xqm} and BuildNo=#{ldh} and CellNo=#{dyh} 
+		order by HouseNo 
+	</select>
+	
+	<select id="findz" resultMap="YhMap" >
+		Select 
+        y.ValAd,
+		f.ID,
+		y.YhName,
+		y.XqName,
+		y.BuildNO,
+		y.CellNO,
+		y.HouseNO,
+		y.Bjxx,
+		y.BjTime,
+		y.Bz,
+		f.ValAd,
+		f.Status,
+		f.FamKd,
+		f.LockSt,
+		f.JFSt,
+		f.Tqyb,
+		y.YLFQ,
+		f.ValTemp,
+		f.RoomTemp,
+		f.QgID,
+		y.SFJF,
+		y.SFQF,
+		y.SFTR,
+		y.YHBM,
+		y.JFSJ,
+		f.RecordTime,
+		y.HeatArea,
+		y.Yhfl,
+		y.YhRb,
+		y.Cjq,
+		y.IDNum,
+		y.WCAd
+		from T_FmInfo f,T_YhInfo y
+		where
+		y.ValAd = f.ValAd and y.SFJF='是'  
+		<if test="xqName!=null">
+			and y.XqName=#{xqName}
+		</if>
+		<if test="buildNO!=null">
+			and y.BuildNo=#{buildNO}
+		</if>
+		<if test="cellNO!=null">
+			and y.CellNO=#{cellNO}
+		</if>
+		ORDER BY y.HouseNO  asc
+	</select>
+	
+	<select id="find" resultMap="YhMap">
+		select *  from T_XqInfo  
+	</select>
+	<select id="findYhNameList" resultType="java.lang.String">
+		select XqName from T_YhInfo  where YhRb=0 group by 
+		XqName
+	</select>
+	
+	<insert id="InsertXq" >
+		insert into T_XqInfo
+		(XqName,LxrName,LxrPhone,NHPrice,AreaPrice1,AreaPrice2,HESName,Jd,Wd,Place)
+		values(#{XqName},#{LxrName},#{LxrPhone},#{NHPrice},#{AreaPrice1},#{AreaPrice2},#{HESName},#{Jd},#{Wd},#{Place})
+	</insert>
+	
+	<update id="UpdateXq">
+		update T_XqInfo set
+		XqName=#{XqName},LxrName=#{LxrName},LxrPhone=#{LxrPhone},NHPrice=#{NHPrice},AreaPrice1=#{AreaPrice1},AreaPrice2=#{AreaPrice2} ,HESName=#{HESName}
+		,Jd=#{Jd},Wd=#{Wd},Place=#{Place}
+		where ID=#{id}
+	</update>
+	
+	<delete id="DeleteXq" >
+		delete from T_XqInfo
+		where
+		ID=#{id}
+	</delete>
+		<select id="findzdjk" resultMap="YhMap">
+		select y.id ,y.YhName,y.ValAd,y.yhfl,f.QgID,y.XqName,y.BuildNO,y.CellNO,y.HouseNO,f.Status,y.HeatArea,y.CjqTime,y.CjqWz,y.Telephone,
+		f.RoomTemp,f.LockSt,y.IDNum,f.FamKd,f.ValTemp,f.Tqyb,y.SFJF,y.WCAd ,y.Bz,CONVERT(varchar(100),f.RecordTime , 20)as RecordTime,
+		f.MTemSet,f.LTemSet,f.HTemSet
+		from T_YhInfo y ,T_FmInfo f where y.ValAd=f.ValAd and (y.yhrb=0 or y.yhrb=2)
+		and y.Yhfl=#{yhfl}
+	</select>
+	<select id="findYh" resultMap="YhMap" >
+		select y.id ,y.YhName,y.ValAd,y.yhfl,f.QgID,y.XqName,y.BuildNO,y.CellNO,y.HouseNO,f.Status,y.HeatArea,y.CjqTime,y.CjqWz,y.Telephone,
+		f.RoomTemp,f.LockSt,y.IDNum,f.FamKd,f.ValTemp,f.Tqyb,y.SFJF,y.WCAd ,y.Bz,CONVERT(varchar(100),f.RecordTime , 20)as RecordTime,
+		f.MTemSet,f.LTemSet,f.HTemSet
+		from T_YhInfo y ,T_FmInfo f where y.ValAd=f.ValAd and (y.yhrb=0 or y.yhrb=2)
+        <if test="xqm!=null and xqm!=''">
+        and y.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and y.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and y.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	    and y.HouseNO=#{hh}
+        </if>        
+        <if test="yhfl!=null and yhfl!=''">
+	    and y.yhfl=#{yhfl}
+        </if>
+        
+        <if test="FamKd1!=null and FamKd1!=''">
+	    and  f.FamKd &gt;= #{FamKd1}
+        </if>
+        <if test="FamKd2!=null and FamKd2!=''">
+	    and  f.FamKd &lt;= #{FamKd2}
+        </if>
+        
+        <if test="RoomTemp1!=null and RoomTemp1!=''">
+	    and  f.RoomTemp &gt;= #{RoomTemp1}
+        </if>
+        <if test="RoomTemp2!=null and RoomTemp2!=''">
+	    and  f.RoomTemp &lt;= #{RoomTemp2}
+        </if>
+        
+        <if test="ValTemp1!=null and ValTemp1!=''">
+	    and  f.ValTemp &gt;= #{ValTemp1}
+        </if>
+        <if test="ValTemp2!=null and ValTemp2!=''">
+	    and  f.ValTemp &lt;= #{ValTemp2}
+        </if>
+        <if test="sfjf!=null and sfjf!=''">
+	    and y.SFJF=#{sfjf}
+        </if>
+        <if test="xqm!=null and xqm!=''">
+        order by y.BuildNO asc,y.CellNO asc, y.HouseNO asc
+        </if>
+       
+	</select>
+	
+	
+	<insert id="InsertFm" >
+		insert into T_FmInfo
+		(ValAd,QgID)
+		values(#{ValAd},#{QgID})
+	</insert>
+	
+	<insert id="InsertYh" >
+		insert into T_YhInfo
+		(YhName,XqName,BuildNO,CellNO,HouseNO,ValAd,Bz,yhfl,yhrb)
+		values(#{YhName},#{XqName},#{BuildNO},#{CellNO},#{HouseNO},#{ValAd},#{Bz},#{yhfl},'0')
+	</insert>
+	
+	<update id="UpdateFm">
+		update T_FmInfo set
+		ValAd=#{ValAd},QgID=#{QgID}		
+		where ValAd=#{ValAd}
+	</update>
+	
+	<update id="UpdateYh">
+		update T_YhInfo set
+		ValAd=#{ValAd},YhName=#{YhName},XqName=#{XqName},BuildNO=#{BuildNO},CellNO=#{CellNO},HouseNO=#{HouseNO},Bz=#{Bz},yhfl=#{yhfl}
+		where ID=#{id}
+	</update>
+	
+	<delete id="DeleteYh" >
+		delete from T_YhInfo
+		where
+		ValAd=#{ValAd}
+	</delete>
+	
+	<delete id="DeleteFm" >
+		delete from T_FmInfo
+		where
+		ValAd=#{ValAd}
+	</delete>
+	
+	<select id="findFm" resultType="java.lang.Integer">
+		select count(*)  from T_YhInfo  where ValAd=#{ValAd}
+	</select>
+	
+	
+	<select id="findFmLs" resultMap="YhMap">
+		select top 2000 * ,CONVERT(varchar(100), f.RecordTime , 20)as time  from T_FmHistory19  f, T_YhInfo y where y.ValAd=f.ValAd
+		
+		 <if test="xqm!=null and xqm!=''">
+        and y.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and y.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and y.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	    and y.HouseNO=#{hh}
+        </if>
+		order by   RecordTime desc
+	</select>
+	
+	<select id="findFmkdLs" resultMap="YhMap">
+		select top 500  * ,CONVERT(varchar(100), f.RecordTime , 20)as time,RoomTemp,ValTemp  from T_FmHistory19  f, T_YhInfo y where y.ValAd=f.ValAd
+		
+		<if test="xqm!=null and xqm!=''">
+        and y.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and y.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and y.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	    and y.HouseNO=#{hh}
+        </if>
+       <if test="startTime!=null and startTime!=''">
+	    and f.RecordTime &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+	     and f.RecordTime &lt;=#{endTime}
+        </if> 
+		 order by f.RecordTime asc
+	</select>
+	
+	
+	<select id="gdjl" resultMap="YhxxMap">
+		select CONVERT(varchar(100),TJ_Time , 20)as slsj,CONVERT(varchar(100),JS_Time , 20)as jdsj,JS_Name,
+		CONVERT(varchar(100),WC_Time , 20)as wxsj,WC_Name ,VisCon from K_KfGd  k  where 1=1
+		
+		 <if test="xqm!=null and xqm!=''">
+        and k.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and k.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and k.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	    and k.HouseNo=#{hh}
+        </if>
+		order by TJ_Time desc
+	</select>
+	
+	<select id="findKdLs" resultMap="YhMap">
+		 select  * ,CONVERT(varchar(100),Date , 20)as time from TjfxKd where 1=1
+		
+		 <if test="xqm!=null and xqm!=''">
+        and XqName=#{xqm}
+        </if>
+       <if test="startTime!=null and startTime!=''">
+	    and date &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+	     and date &lt;=#{endTime}
+        </if> 
+		order by   date asc
+	</select>
+	
+	<select id="findHisAvg" resultMap="YhMap" >
+	select  * ,CONVERT(varchar(100),Date , 20)as time from XqAvg  where 1=1
+	    <if test="xqm!=null and xqm!=''">
+			and XqName=#{xqm}
+		</if>
+		<if test="startTime!=null and startTime!=''">
+	    and date &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+	     and date &lt;=#{endTime}
+        </if> 
+        order by date asc
+	</select>
+	
+	
+	<select id="findTc" resultMap="YhMap" >
+		select y.id ,y.YhName,y.ValAd,y.yhfl,f.QgID,y.XqName,y.BuildNO,y.CellNO,y.HouseNO,f.Status,y.HeatArea,y.CjqTime,y.CjqWz,
+		f.RoomTemp,f.LockSt,y.IDNum,f.FamKd,f.ValTemp,f.Tqyb,y.SFJF,y.WCAd ,y.Bz,CONVERT(varchar(100),f.RecordTime , 20)as RecordTime
+		from T_YhInfo y ,T_FmInfo f where y.ValAd=f.ValAd and (y.yhrb=0 or y.yhrb=2)
+        <if test="xqm!=null and xqm!=''">
+        and y.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and y.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and y.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	    and y.HouseNO LIKE #{hh}+'%' and len(y.HouseNO)-len(#{hh})=2
+	 
+        </if>        
+	</select>
+	
+	
+	<select id="szt" resultMap="YhMap" >
+		select REPLACE (REPLACE (y.XqName, '（智慧供热区域）',''), '（智慧供热）','')  
+		  as xqm,y.BuildNO as ldh,y.CellNO as dyh,y.HouseNO as hh
+		
+		from T_YhInfo y  where  (y.yhrb=0 or y.yhrb=2)
+	</select>
+	
+	<update id="updateType" >
+		update T_FmInfo set Type=#{type} where ValAd=#{ValAd}
+	</update>
+	
+	<select id="geidz" resultMap="YhMap" >
+		select XqName, BuildNo ,CellNo,HouseNo,WCAd from  T_YhInfo where ValAd=#{ValAd}
+	</select>
+	
+	<update id="updateCgqId" >
+		update T_YhInfo set WCAd=#{idNum} where ValAd=#{valAd}
+	</update>
+	<select id="chartSearchA" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+        and RoomTemp &gt;'26'
+       <include refid="xq"></include>
+		</select>
+		<select id="chartSearchB" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+        and RoomTemp &gt;'0'  and RoomTemp &lt;='15'
+        <include refid="xq"></include>
+		</select>
+		
+		
+		<select id="chartSearchC" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+	 	and RoomTemp &gt;'15'  and RoomTemp &lt;'18'
+		<include refid="xq"></include>
+		
+		</select>
+		<select id="chartSearchD" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+		 and RoomTemp &gt;='18'  and RoomTemp &lt;= '22'
+		<include refid="xq"></include>
+		
+		</select>
+		
+		<select id="chartSearchE" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+		 and RoomTemp &gt; '22'  and RoomTemp &lt;='26'
+		<include refid="xq"></include>
+		</select>
+		<select id="chartSearchG" resultType="int" >
+		select count(*) 
+        from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd
+		and  RoomTemp=0
+		<include refid="xq"></include>
+		</select>
+		
+		<select id="findFamKdA" resultType="int">
+		select count(*)
+		  from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd and FamKd ='100'
+		<include refid="xq"></include>
+	</select>
+
+	<!-- 等于0多少 -->
+	<select id="findFamKdF" resultType="int">
+		select count(*)
+		  from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd and FamKd ='0'
+		<include refid="xq"></include>
+	</select>
+
+	<!-- 55-75之间 -->
+	<select id="findFamKdC" resultType="int">
+		select count(*)
+		  from T_YhInfo,T_FmInfo
+		where T_YhInfo.ValAd=T_FmInfo.ValAd and FamKd
+		&gt;'0' and FamKd &lt;= '15'
+		<include refid="xq"></include>
+	</select>
+	
+	<select id="findJfxx" resultMap="YhMap" >
+	<!-- select distinct XqName,BuildNO,CellNO,HouseNO from T_YhInfo where YhRb=0 or YhRb=2 -->
+	select distinct XqName,BuildNO,CellNO,HouseNO from T_YhInfo where   ( YhRb=0 or YhRb=2)
+	</select>
+	
+	<update  id="updateYhs" parameterType="YhInfo" >
+		update T_YhInfo set YHBM=#{yhbm},SFJF=#{sfjf},JFSJ=#{jfsj},YhName=#{yhName},Telephone=#{telephone},HeatArea=#{heatArea},IDNum=#{idNum} where  XqName=#{xqName} and BuildNO=#{buildNo} and CellNO=#{cellNo} and HouseNO=#{houseNo}
+	
+	</update>
+	<update id="updateYhSfjf" parameterType="YhInfo">
+	update T_YhInfo set SFJF=#{sfjf} where  XqName=#{xqName} and BuildNO=#{buildNo} and CellNO=#{cellNo} and HouseNO=#{houseNo} 
+	</update>
+	
+	<select id="findJc" resultMap="YhMap" >
+	
+	select j.*,y.YHBM from J_Jcxx j , T_YhInfo y where y.YHBM=j.YHBM 
+	<if test="xqm!=null and xqm!=''">
+        and y.XqName=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+        and y.BuildNO=#{ldh}
+        </if>
+        <if test="dyh!=null and dyh!=''">
+	    and y.CellNO=#{dyh}
+        </if>
+        <if test="hh!=null and hh!=''">
+	     and y.HouseNO=#{hh}
+    </if>   
+	</select>
+	<update id="updateCjqTime">
+	update T_YhInfo set CjqTime=#{CjqTime},CjqWz=#{CjqWz} where ID=#{id}
+	</update>
+	<select id="findHistory"  resultMap="YhxxMap">
+	select a.ValAd,a.RecordTime,a.RoomTemp,a.Status,a.FamKd,a.ValTemp,yh.XqName,yh.BuildNO,yh.CellNO,yh.HouseNO ,yh.CjqTime,yh.CjqWz,yh.Telephone,yh.IDNum,yh.WCAd,yh.SFJF,yh.YhName
+    from (select f.FamKd,CONVERT(varchar(100),f.RecordTime , 20)as RecordTime,f.RoomTemp,f.Status,f.ValAd,f.ValTemp
+    from dbo.T_FmHistory19 f union select y.FamKd,CONVERT(varchar(100),y.RecordTime , 20)as RecordTime,y.RoomTemp,y.Status,y.ValAd,y.ValTemp 
+    from dbo.T_FmHistory18 y union select  z.FamKd,CONVERT(varchar(100),z.RecordTime , 20)as RecordTime,z.RoomTemp,z.Status,z.ValAd,z.ValTemp
+     from  dbo.T_FmHistory z  ) a ,T_YhInfo yh
+    where  a.ValAd=yh.ValAd
+  	<if test="xqName!=null and xqName!=''">
+        and yh.XqName=#{xqName}
+        </if>
+        <if test="buildNo!=null and buildNo!=''">
+        and yh.BuildNO=#{buildNo}
+        </if>
+        <if test="cellNo!=null and cellNo!=''">
+	    and yh.CellNO=#{cellNo}
+        </if>
+        <if test="HouseNo!=null and HouseNo!=''">
+	     and yh.HouseNO=#{HouseNo}
+    </if>
+     <if test="startTime!=null and startTime!=''">
+	    and a.RecordTime &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+	     and a.RecordTime &lt;=#{endTime}
+        </if> 
+        order by a.RecordTime desc
+<!--   a.ValAd=#{CjqWz} and a.RecordTime>#{CjqWz} and a.RecordTime#{CjqWz}  -->
+	</select>
+	<select id="findHistoryTop"  resultMap="YhxxMap">
+	 select top 1000 CONVERT(varchar(100),f.RecordTime , 20)as RecordTime ,* from T_YhInfo y,T_FmHistory19 f where y.ValAd=f.ValAd
+	 <if test="xqName!=null and xqName!=''">
+        and y.XqName=#{xqName}
+        </if>
+        <if test="buildNo!=null and buildNo!=''">
+        and y.BuildNO=#{buildNo}
+        </if>
+        <if test="cellNo!=null and cellNo!=''">
+	    and y.CellNO=#{cellNo}
+        </if>
+        <if test="HouseNo!=null and HouseNo!=''">
+	     and y.HouseNO=#{HouseNo}
+    </if>
+    <if test="startTime!=null and startTime!=''">
+	    and f.RecordTime &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null and endTime!=''">
+	     and f.RecordTime &lt;=#{endTime}
+        </if> 
+	</select>
+	<update id="updateYhlb">
+	update T_YhInfo set Yhfl=#{Yhfl} where ValAd=#{ValAd}
+	</update>
+</mapper>

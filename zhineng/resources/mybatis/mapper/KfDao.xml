@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hnzy.hot.dao.KfDao">
+	<resultMap id="YxglMap" type="java.util.HashMap"></resultMap>
+	
+	<select id="findKf" resultMap="YxglMap">
+		select distinct id, xq,ld,dy,hh, imgPath,cjqLocation,cjq.cjqSerialNum,cjq.createAt,cjq.admin
+ 	from tb_cjq_install cjq  where 1=1
+      <if test="xqName!=null and xqName!=''">
+            and xq =#{xqName}
+         </if>
+         
+         <if test="buildNO!=null and buildNO!=''">
+            and ld =#{buildNO}
+         </if>
+         
+         <if test="cellNO!=null and cellNO!=''">
+            and dy =#{cellNO}
+         </if>
+         
+         <if test="houseNO!=null and houseNO!=''">
+            and hh =#{houseNO}
+         </if>
+         order by createAt desc
+	</select>
+	<delete id="deleteKfGd">
+	 delete from tb_cjq_install where id=#{id}
+	</delete>
+	<select id="findhfjl"  resultMap="YxglMap" >
+	select * from K_kfhfjl where 1=1
+	 <if test="xqName!=null and xqName!=''">
+            and xqName =#{xqName}
+         </if>
+         
+         <if test="buildNO!=null and buildNO!=''">
+            and buildNO=#{buildNO}
+         </if>
+         
+         <if test="cellNO!=null and cellNO!=''">
+            and cellNO =#{cellNO}
+         </if>
+         
+         <if test="houseNO!=null and houseNO!=''">
+            and houseNO =#{houseNO}
+         </if>
+         order by hftime desc
+	</select>
+	<insert id="insertHf">
+	insert into K_kfhfjl (hfr,XqName,BuildNO,CellNO,HouseNO,hflx,hfjg,hfmd,hftime)
+	values(#{hfr},#{XqName},#{BuildNO},#{CellNO},#{HouseNO},#{hflx},#{hfjg},#{hfmd},#{hftime})
+	</insert>
+	<delete id="DeleteKfhf">
+	 delete from K_kfhfjl where id=#{id}
+	</delete>
+	<update id="Updatehfjl">
+	update K_kfhfjl set hfr=#{hfr},XqName=#{XqName},BuildNO=#{BuildNO},CellNO=#{CellNO},HouseNO=#{HouseNO}
+	,hflx=#{hflx},hfjg=#{hfjg},hfmd=#{hfmd} where id=#{id}
+	</update>
+</mapper>
