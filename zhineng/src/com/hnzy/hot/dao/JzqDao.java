@@ -3,9 +3,11 @@ package com.hnzy.hot.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface JzqDao {
 	
-	public List<String> find();
+	public List<String> find(@Param(value="xqm") String xqm);
 	
 	public void Insert(Map<String, Object> map);
 	

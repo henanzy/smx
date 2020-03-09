@@ -6,9 +6,15 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);      
     return(localhostPaht+projectName);  
 } 
-
+var xqflag=0;
+var ldflag=0;
+var dyflag=0;
 $(document).ready(function(){
 	var shebList = [];
+	$("#qx").click(function(){
+		                $("tbody input[name='check']").prop("checked",this.checked);//监测在tbody标签下input名为select的是否被勾选
+        
+		           });
 	function jsArrChange(json){
 		for (var i = 0 ; i < json.length ; i ++) {
 			var arr1 = [];
@@ -416,7 +422,11 @@ $("#sel_zdjk").click(function(){
 		var ld = $('#ldh').val();
 		var dy = $('#dyh').val();
 		var hh = $('#hh').val();
-		var compareWordList = [];
+		$('#zl').html("小区："+xq+" 楼栋："+ld+" 单元："+dy);
+		 xqflag=xq;
+		 ldflag=ld;
+		 dyflag=dy;
+		 compareWordList = [];
 		compareWord(xq,ld,dy,hh,compareWordList);
 		shebList=compareWordList;		
 		
@@ -455,7 +465,10 @@ $("#search_btn").click(function(){
 		var thisIndex = tbHeadTh.index($(this))+1; //获取th所在的列号
 
 		var type ="";
-		$(this).click(function() { //给当前表头th增加点击事件
+		$(this).click(function() {
+			if($(this).attr("id")=='qxth'){
+				return;
+			}//给当前表头th增加点击事件
 			tbHeadTh.find("span").show();
 			if(sortIndex%2 == 1){//奇数偶数显示
 				$(this).find(".span-up").show();
@@ -557,9 +570,23 @@ function tbodydis(oldlist,newlist,page){
 					html += "<tr class='gradeX even'>";
 				}
 				html += "<td><input type='checkbox' value='"+newlist[i][0]+"' name='check'/></td>";
+				
+				$("#tdxq").removeClass("none");
+				$("#tdld").removeClass("none");
+				$("#tddy").removeClass("none");
 				for (var j = 0 ; j <newlist[i].length-1 ; j ++) {
-					
-					if(j==0){
+					if(j==2&&xqflag!=0){
+						html += "<td style='display:none;'>" + newlist[i][j] + "</td>";
+						$("#tdxq").addClass("none");
+					}else if(j==3&&ldflag!=0)
+					{
+						html += "<td style='display:none;'>" + newlist[i][j] + "</td>";
+						$("#tdld").addClass("none");
+					}else if(j==4&&dyflag!=0){
+						html += "<td style='display:none;'>" + newlist[i][j] + "</td>";
+						$("#tddy").addClass("none");
+					}
+					else if(j==0){
 
 						html += "<td style='display:none;'>" + newlist[i][j] + "</td>";
     					

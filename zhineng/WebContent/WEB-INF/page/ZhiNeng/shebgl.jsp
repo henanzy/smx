@@ -243,7 +243,10 @@
 	#change_word .close::before {
 	    content: "\2716";
 	}
-	
+	.none{
+		display:none;
+		
+	}
 	/* 新增修改弹出框input */
 	#increase_word .mws-form-row .increase_word_input,
 	#change_word .mws-form-row .change_word_input {
@@ -502,7 +505,7 @@ function isIntNum(){
 
      	  	<div class="mws-panel grid_8" >
                 	<div class="mws-panel-header">
-                    	<span class="mws-i-24 i-table-1">数据显示</span>
+                    	<span class="mws-i-24 i-table-1" id="zl"></span>
                     </div>
 
                     
@@ -511,11 +514,11 @@ function isIntNum(){
                         <table class="mws-table">
                             <thead >
                                 <tr>
-                                    <th class="table-th-css"></th>
+                                    <th class="table-th-css" id="qxth"><input type='checkbox' id='qx'/></th>
                                     <th class="table-th-css">用户姓名<span class="span-up"></span> <span class="span-down"></span></th>
-	            					<th class="table-th-css">小区名称<span class="span-up"></span> <span class="span-down"></span></th>
-	            					<th class="table-th-css">楼栋<span class="span-up"></span> <span class="span-down"></span></th>
-	            					<th class="table-th-css">单元<span class="span-up"></span> <span class="span-down"></span></th>
+	            					<th class="table-th-css" id="tdxq" >小区名称<span class="span-up"></span> <span class="span-down"></span></th>
+	            					<th class="table-th-css" id="tdld">楼栋<span class="span-up"></span> <span class="span-down"></span></th>
+	            					<th class="table-th-css" id="tddy">单元<span class="span-up"></span> <span class="span-down"></span></th>
 	            					<th class="table-th-css">户号<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">状态<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">缴费<span class="span-up"></span> <span class="span-down"></span></th>

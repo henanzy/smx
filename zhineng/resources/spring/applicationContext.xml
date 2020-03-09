@@ -110,8 +110,8 @@
  <task:scheduled ref="cTest" method="print" cron="0 0 0 * * ?" /> 
 <!--  每30分钟调用一次 获取天气预报 -->
 <task:scheduled ref="cTest" method="tqyb" cron="0 0/30 * * * ?" />
-  <task:scheduled ref="cTest" method="doSomething" cron="0/20 * *  * * ?" />
- <task:scheduled ref="cTest" method="doSomething" cron="0/2 * * * * ?" />
+  <!-- <task:scheduled ref="cTest" method="doSomething" cron="0/20 * *  * * ?" />
+ <task:scheduled ref="cTest" method="doSomething" cron="0/2 * * * * ?" /> -->
  </task:scheduled-tasks> 
 </beans>
 

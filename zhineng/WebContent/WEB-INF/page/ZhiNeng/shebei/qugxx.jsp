@@ -165,7 +165,7 @@
 	width: 98% !important;
 	min-width: 170px;
 	margin: 8px 1%;
-	height: 70px;
+	height: 120px;
 	float: left;
 	cursor: pointer;
 	display: block;
@@ -265,6 +265,14 @@ $.ajax({
                    	 <p class="mws-report" href="#" style="font-size: 14px;"> 
                     	
                         <span class="mws-report-content" style="margin-top: 5px;">
+                                                        选择小区：
+						<select id="xq" style="width:90px"
+						name="xqName">
+						
+					</select>
+					 <input type="submit" id="search_btn" style="height:35px" class="mws-button black"  value="查询"/>
+					
+					<br/><br/>
                         <button  class="mws-button black" id="cxqgtx">查询通信状态</button>
                          <button  class="mws-button black" id="cxskqtx">查询刷卡器状态</button>
                             <button  class="mws-button black" id="cxjzqtx">查询集中器状态</button>
@@ -521,5 +529,29 @@ $.ajax({
                  
 </div>           
 <script type="text/javascript" src="../js/qgxx.js"></script>
+<script type="text/javascript">
+var xq;
+
+$.ajax({
+		url : "<%=basePath%>yhInfo/findXq.action", 
+		async : false,
+		dataType : "json",
+		data : {
+			
+		},
+		success : function(data) {
+			
+			var opt="";
+			 xq=data.Xq;
+			
+			 for(var i=0; i<xq.length; i++){
+					
+					$("#xq").append("<option value='"+xq[i].XqName+"'>"+xq[i].XqName+"</option>");
+					
+				}
+		}
+
+	});
+</script>
 </body>
 </html>

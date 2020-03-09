@@ -17,9 +17,9 @@ public class QgServiceImpl implements QgService{
 	private QgDao qgDao;
 
 	@Override
-	public List<String> find() {
+	public List<String> find(String xqm) {
 		// TODO Auto-generated method stub
-		return qgDao.find();
+		return qgDao.find(xqm);
 	}
 
 	@Override

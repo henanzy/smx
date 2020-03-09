@@ -10,6 +10,7 @@ $(document).ready(function(){
 //  表格
 
 	var qgxxList=[];
+	var compareWordList = [];
 	function jsArrChange(json){
 		for (var i = 0 ; i < json.length ; i ++) {
 			var arr1 = [];
@@ -38,8 +39,32 @@ $(document).ready(function(){
 	jsArrChange(list);
 	tbodydis("",qgxxList,1)
 	
+$("#search_btn").click(function(){
+	/*layer.msg('数据加载中...', {
+		icon: 16,
+		shade: 0.01
+		
+		})*/
+		
+	
+	var xq = $('#xq').val();
 	
 	
+	
+	
+	
+		compareWord(xq,compareWordList);
+		qgxxList=compareWordList;
+	$("#qgxx_body").empty();
+
+	
+	
+	tbodydis("",qgxxList,1);
+	
+
+
+	
+});
 	var wordExport = document.getElementById("export_btn");
 	wordExport.onclick=function(){
 		var aID =  this.parentNode.getAttribute("id");
@@ -352,21 +377,7 @@ $(document).ready(function(){
 //表格写入函数带分页
 function tbodydis(oldlist,newlist,page){
 	
-	if(oldlist == ""){
-		var opt = [];
-		for(var i = 0; i < newlist.length; i++) {
-			for (var j = 0 ; j <newlist[i].length ; j ++) {
-				if(j == 1){
-					if( opt.indexOf(newlist[i][1]) == -1){
-						opt.push(newlist[i][1]);
-					}
-				}
-			}
-		}
-		for(var i = 0; i < opt.length; i++) {
-			$("#xq").append("<option>"+opt[i]+"</option>");
-		}
-	}
+
 	
 	var current = 1;
 	function pageInit(currentPage, pagesize) {
@@ -512,7 +523,6 @@ function tbodydis(oldlist,newlist,page){
 	
 	
 
-
 	function xin_del(p){
 		var xintr = $(p).parent().parent().children();
 		var id=xintr[0].innerHTML
@@ -528,10 +538,54 @@ function tbodydis(oldlist,newlist,page){
 			                     dataType: "json",
 			                      success: function (data) {
 			                    	   layer.close(index);
-			                          window.location.reload();
+			                    	   var page=$("#currentNum").html();
+ 		                    		   tbodydis("",qgxxList,page)
 			                     },
 			  
 			                 })
 			              });
 	}
 }
+function compareWord(xq,compareWordList){
+	
+	var json;
+	compareWordList.length=0;
+	$.ajax({
+		url : "find.action", 
+		async : false,
+		dataType : "json",
+		data : {
+			"xqm":xq,
+			
+			
+		},
+		success : function(data) {
+		 json=data.list;
+		
+		}
+	});
+
+	for (var i = 0 ; i < json.length ; i ++) {
+		var arr1 = [];
+		arr1[0] = json[i].ID;
+		arr1[1] = json[i].QgID;
+		arr1[2] = json[i].JzqID;
+		arr1[3] = json[i].XqName;
+		arr1[4] = json[i].InstallAd;
+	/*	arr1[5] = json[i].QgStatus;*/
+		/*arr1[6] = json[i].Version;
+		arr1[7] = json[i].Mode;
+		arr1[8] = json[i].ReadCycle;*/
+		arr1[5] = json[i].VALstID;
+		arr1[6] = json[i].VALedID;
+		if(json[i].SkqSbh==null){
+			arr1[7]=""
+		}else{
+			arr1[7] = json[i].SkqSbh;
+		}
+		arr1[8] = json[i].skqWz;
+		arr1[9] = json[i].Time;
+		compareWordList.push(arr1);
+	};
+	
+}	

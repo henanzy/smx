@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface QgService {
-	public List<String> find();
+	public List<String> find(String xqm);
 	
 	public void Insert(Map<String, Object> map);
 	

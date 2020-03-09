@@ -3,9 +3,12 @@
 <mapper namespace="com.hnzy.hot.dao.JzqDao">
 	<resultMap id="JzqMap" type="java.util.HashMap"></resultMap>
 	<select id="find" resultMap="JzqMap">
-		select j.ID,j.JzqID,j.JzqIp,j.JzqPort,j.Status,j.XqName,j.HESName,
+		select distinct j.ID,j.JzqID,j.JzqIp,j.JzqPort,j.Status,j.XqName,j.HESName,
 j.InstallAD,CONVERT(varchar(100),j.UpdateTime , 20)as UpdateTime from T_JzqInfo j,T_QgInfo q
- where j.JzqID=q.JzqID and q.QgFl=0 or q.QgFl=2
+ where j.JzqID=q.JzqID and (q.QgFl=0 or q.QgFl=2)
+ <if test="xqm!=null and xqm!=''">
+	     and j.XqName=#{xqm}
+        </if>
 	</select>
 	
 	

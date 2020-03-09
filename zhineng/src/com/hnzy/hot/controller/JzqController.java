@@ -1,5 +1,6 @@
 package com.hnzy.hot.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,23 @@ public class JzqController {
 		}
     	return "ZhiNeng/shebei/jizqxx";
     }
-	
+	private String getUtf8(String str){
+		if(str!=null){
+			try {
+				str=new String(str.getBytes("ISO-8859-1"),"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return str;
+	}
 	@RequestMapping("find")
 	@ResponseBody
-	public JSONObject findXq(){
+	public JSONObject findXq(String xqm){
 		JSONObject json=new JSONObject();
 		
-		json.put("list", jzqService.find());
+		json.put("list", jzqService.find(getUtf8(xqm)));
 		return json;
 	}
 	

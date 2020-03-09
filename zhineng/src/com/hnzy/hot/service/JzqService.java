@@ -3,8 +3,10 @@ package com.hnzy.hot.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface JzqService {
-	public List<String> find();
+	public List<String> find(@Param(value="xqm") String xqm);
 	
 	public void Insert(Map<String, Object> map);
 	

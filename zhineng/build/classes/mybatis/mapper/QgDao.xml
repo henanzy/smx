@@ -3,7 +3,10 @@
 <mapper namespace="com.hnzy.hot.dao.QgDao">
 	<resultMap id="QgMap" type="java.util.HashMap"></resultMap>
 	<select id="find" resultMap="QgMap">
-		select * ,CONVERT(varchar(100),RecordTime , 20)as Time from T_QgInfo where QgFl=0 or QgFl=2
+		select * ,CONVERT(varchar(100),RecordTime , 20)as Time from T_QgInfo where (QgFl=0 or QgFl=2)
+		<if test="xqm!=null and xqm!=''">
+	     and XqName=#{xqm}
+        </if>
 	</select>
 	
 	

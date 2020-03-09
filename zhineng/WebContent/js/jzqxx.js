@@ -1,6 +1,6 @@
 $(document).ready(function(){
 //  表格
-
+	var compareWordList = [];
 	var qgxxList=[];
 	function jsArrChange(json){
 		for (var i = 0 ; i < json.length ; i ++) {
@@ -21,7 +21,32 @@ $(document).ready(function(){
 	}
 	jsArrChange(list);
 	tbodydis("",qgxxList)
-	
+	$("#search_btn").click(function(){
+		/*layer.msg('数据加载中...', {
+			icon: 16,
+			shade: 0.01
+			
+			})*/
+			
+		
+		var xq = $('#xq').val();
+		
+		
+		
+		
+		
+			compareWord(xq,compareWordList);
+			qgxxList=compareWordList;
+		$("#qgxx_body").empty();
+
+		
+		
+		tbodydis("",qgxxList);
+		
+
+
+		
+	});
 	
 });
 
@@ -29,21 +54,7 @@ $(document).ready(function(){
 //表格写入函数带分页
 function tbodydis(oldlist,newlist){
 	
-	if(oldlist == ""){
-		var opt = [];
-		for(var i = 0; i < newlist.length; i++) {
-			for (var j = 0 ; j <newlist[i].length ; j ++) {
-				if(j == 1){
-					if( opt.indexOf(newlist[i][1]) == -1){
-						opt.push(newlist[i][1]);
-					}
-				}
-			}
-		}
-		for(var i = 0; i < opt.length; i++) {
-			$("#xq").append("<option>"+opt[i]+"</option>");
-		}
-	}
+	
 	
 	var current = 1;
 	function pageInit(currentPage, pagesize) {
@@ -211,3 +222,37 @@ function tbodydis(oldlist,newlist){
 			              });
 	}
 }
+function compareWord(xq,compareWordList){
+	
+	var json;
+	compareWordList.length=0;
+	$.ajax({
+		url : "find.action", 
+		async : false,
+		dataType : "json",
+		data : {
+			"xqm":xq,
+			
+			
+		},
+		success : function(data) {
+		 json=data.list;
+		
+		}
+	});
+
+	for (var i = 0 ; i < json.length ; i ++) {
+		var arr1 = [];
+		arr1[0] = json[i].ID;
+		arr1[1] = json[i].JzqID;
+		arr1[2] = json[i].JzqIp;
+		arr1[3] = json[i].JzqPort;
+		arr1[4] = json[i].Status;
+		arr1[5] = json[i].XqName;
+		arr1[6] = json[i].HESName;
+		arr1[7] = json[i].InstallAD;
+		arr1[8] = json[i].UpdateTime;
+		compareWordList.push(arr1);
+	};
+	
+}	

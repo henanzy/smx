@@ -3,6 +3,7 @@ package com.hnzy.hot.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ public class JzqServiceImpl implements JzqService{
 	private JzqDao jzqDao;
 
 	@Override
-	public List<String> find() {
+	public List<String> find(@Param(value="xqm") String xqm) {
 		// TODO Auto-generated method stub
-		return jzqDao.find();
+		return jzqDao.find(xqm);
 	}
 
 	@Override
