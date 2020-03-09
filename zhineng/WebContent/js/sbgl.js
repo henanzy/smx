@@ -114,6 +114,7 @@ $(document).ready(function(){
 			                     dataType: "json",
 			                      success: function (data) {
 			                    	   if(data.js=="0"){
+			                    		  
 			                    		   alert("开阀成功");
 			                    		   var page=$("#currentNum").html();
 			                    		    search(page);
@@ -136,40 +137,55 @@ $(document).ready(function(){
 	});
 	
 	$("#df").click(function(){
+		var flag=0;
 		 $('input[name="check"]:checked').each(function (index, item) {
 			 var row=$(this).parent("td").parent("tr");
 			 var td = row.find("td");
 			 var valad=td[15].innerHTML;
 			 var qgid=td[22].innerHTML;
 		/*	 var fmkd =td[9].innerHTML;*/
-			          $.ajax({
-		                     type: "post",
-		                    url: getRootPath()+"/sbglCon/dFm.action",
-		                      dataType:'json',
-		                      async:false,
-		                  	data:{	
-		      					"fmId":valad,
-		      					"qgId":qgid,
-		      					
-		      				},
-		                     dataType: "json",
-		                      success: function (data) {
-		                    	   if(data.js=="0"){
-		                    		   alert("读阀成功");
-		                    		   var page=$("#currentNum").html();
-		                    		    search(page);
-		                    	   }else if(data.js=="error"){
-		                    		   alert("您没有相应权限")
-		                    	   }else{
-		                    		   alert("读阀失败 ");
-		                    		   var page=$("#currentNum").html();
-		                    		    search(page);
-		                    	   }
-		                     },
-		  
-		                 })
+			
+				 $.ajax({
+                     type: "post",
+                    url: getRootPath()+"/sbglCon/dFm.action",
+                    dataType:'json',
+                    async:false,
+                  	data:{	
+      					"fmId":valad,
+      					"qgId":qgid,
+      					
+      				},
+                     dataType: "json",
+                      success: function (data) {
+                    	   if(data.js=="0"){
+                    		   if($("#qx").prop("checked") == false) {
+                    			   alert("读阀成功");
+                    		   }		                    		   
+                    		   var page=$("#currentNum").html();
+                    		    search(page);
+                    	   }
+                    	   else if(data.js=="5"){
+                    		   flag=5;
+                    	   }else{
+                    		   if($("#qx").prop("checked") == false) {
+                    			   alert("读阀失败 ");
+                    		   }
+                    		  
+                    		   var page=$("#currentNum").html();
+                    		    search(page);
+                    	   }
+                     },
+  
+                 })
+				
+                 if(flag==5){
+        			 alert("请重新登录");
+        			 
+        			 return ture;
+        		 }   
 		                 
 			    });			 
+		 
 });
 
 	$("#gf").click(function(){
@@ -190,13 +206,16 @@ $(document).ready(function(){
 		                     dataType: "json",
 		                      success: function (data) {
 		                    	   if(data.js=="0"){
+		                    		   
 		                    		   alert("关阀成功");
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }else if(data.js=="5"){
 		                    		   alert("请重新登录")
+		                    		   return;
 		                    	   }else if(data.js=="error"){
 		                    		   alert("您没有相应权限")
+		                    		   return;
 		                    	   }else{
 		                    		   alert("关阀失败 ")
 		                    		   var page=$("#currentNum").html();
@@ -211,6 +230,7 @@ $(document).ready(function(){
 });
 	
 	$("#dcgq").click(function(){
+		var flag="";
 		 $('input[name="check"]:checked').each(function (index, item) {
 			 var row=$(this).parent("td").parent("tr");
 			 var td = row.find("td");
@@ -229,20 +249,30 @@ $(document).ready(function(){
 		                     dataType: "json",
 		                      success: function (data) {
 		                    	   if(data=="0"){
-		                    		   alert("读传感器地址成功");
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("读传感器地址成功");
+		                    		   }
+		                    		  
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }else if(data=="error"){
-		                    		   alert("您没有相应权限")
+		                    		   flag="error"
+		                    		  
 		                    	   }else{
-		                    		   alert("读传感器地址失败 ")
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("读传感器地址失败");
+		                    		   }
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }
 		                     },
 		  
 		                 })
-		                 
+		                 if(flag=="error"){
+		        			 alert("您没有相应权限");
+		        			 
+		        			 return ture;
+		        		 }  
 			    });			 
      		              
 });
@@ -297,6 +327,7 @@ $(document).ready(function(){
 
 });
 	$("#fscs").click(function(){
+		var flag=0;
 		 $('input[name="check"]:checked').each(function (index, item) {
 			 var row=$(this).parent("td").parent("tr");
 			 var td = row.find("td");
@@ -321,21 +352,35 @@ $(document).ready(function(){
 		                     dataType: "json",
 		                      success: function (data) {
 		                    	   if(data=="0"){
-		                    		   alert("发送成功");
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("发送成功");
+		                    		   }
+		                    		  
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }else if(data=="5"){
-		                    		   alert("请重新登录")
+		                    		   flag=5;
 		                    	   }else if(data=="error"){
-		                    		   alert("您没有相应权限")
+		                    		   flag=2;
 		                    	   }else{
-		                    		   alert("发送失败 ")
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("发送失败 ")
+		                    		   }
+		                    		   
 		                    		   var page=$("#currentNum").html();
 		                    	   }
 		                     },
 		  
 		                 })
-		                 
+		                 if(flag==2){
+		        			 alert("您没有相应权限");
+		        			 
+		        			 return ture;
+		        		 }  if(flag==5){
+                              alert("请重新登录");
+		        			 
+		        			 return ture;
+		        		 }
 			    });			 
     		              
 });

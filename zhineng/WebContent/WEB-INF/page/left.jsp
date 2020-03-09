@@ -318,9 +318,10 @@ ul.ac_kf li a:hover {
 						class="mws-i-24 i-address-book-2">设备信息</a>
 						<ul class="ac_kf">
 						    <li><a class="taglist" onclick="shebgl()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;设备管理</a></li>
+						    <li><a class="taglist" onclick="qugxx()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;区管信息</a></li>
 							<li><a class="taglist" onclick="jizqxx()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;集中器信息</a></li>
 							
-							<li><a class="taglist" onclick="qugxx()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;区管信息</a></li>
+							
 							 <li><a class="taglist" onclick="cgqdz()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;传感器地址</a></li> 
 							
 

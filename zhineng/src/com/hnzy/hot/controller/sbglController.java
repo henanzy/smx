@@ -217,7 +217,7 @@ public class sbglController {
 			String	userName=(String) session.getAttribute("UserName");
 			
 			if(userName!=null){
-			 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+			 
 			
 			 String roleId=userService.getRoleByName(userName);
 	    	 List<Integer> list=userService.getRole_Per(roleId);
@@ -320,7 +320,7 @@ public class sbglController {
 	    	
 	    	String	userName=(String) session.getAttribute("UserName");
 	    	if(userName!=null){
-	    	 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+	    	 
 	    	 String roleId=userService.getRoleByName(userName);
 	    	 List<Integer> list=userService.getRole_Per(roleId);
 	    	 String per_id=userService.getRoleIdByName("开关阀")+"";
@@ -406,7 +406,7 @@ public class sbglController {
 	    	
 	    	String	userName=(String) session.getAttribute("UserName");
 	    	if(userName!=null){
-	    	 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+	    	
 	    	 String roleId=userService.getRoleByName(userName);
 	    	 List<Integer> list=userService.getRole_Per(roleId);
 	    	 String per_id=userService.getRoleIdByName("开关阀")+"";
@@ -442,21 +442,21 @@ public class sbglController {
 		public JSONObject duFm(HttpSession session ,HttpServletRequest request, String fmId, String qgId) throws UnsupportedEncodingException {
 			MapUtilsDf.getMapUtils().add("dFmParam", fmId);
 			JSONObject jsonObject = new JSONObject();
+			
 			String	userName=(String) session.getAttribute("UserName");
-			 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+			if(userName!=null){
+			
 			 String roleId=userService.getRoleByName(userName);
 	    	 List<Integer> list=userService.getRole_Per(roleId);
 	    	 String per_id=userService.getRoleIdByName("读取参数")+"";
 	    	 int flag=0;
+	    	 
 	    	 for (int i = 0; i < list.size(); i++) {
 				if(per_id.equals(list.get(i)+"")){
 					flag=1;
 				}
 			}
-	    	 if(flag==0){
-	    		 jsonObject.put("js", "error");
-	    		 return jsonObject;
-	    	 }
+	    	 
 			// 把FmID转换为int类型
 			int fInteger = Integer.valueOf(fmId);
 			// FmID十进制转换为十六进制
@@ -486,6 +486,10 @@ public class sbglController {
 				return jsonObject;
 			} else {
 				MapUtilsDf.getMapUtils().add("dFm", null);
+				jsonObject.put("js", "2");
+				return jsonObject;
+			}
+			}else{
 				jsonObject.put("js", "5");
 				return jsonObject;
 			}
@@ -501,7 +505,7 @@ public class sbglController {
 			String	userName=(String) session.getAttribute("UserName");
 			if(userName!=null){
 				
-				 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+				
 				 String roleId=userService.getRoleByName(userName);
 		    	 List<Integer> list=userService.getRole_Per(roleId);
 		    	 String per_id=userService.getRoleIdByName("修改阀门参数")+"";
@@ -573,7 +577,7 @@ public class sbglController {
 		@ResponseBody
 		public String cgqads(HttpSession session,String fmId, String qgId) throws UnsupportedEncodingException {
 	    	String	userName=(String) session.getAttribute("UserName");
-			 userName=new String(userName.getBytes("ISO-8859-1"),"utf-8")+"";
+			 
 			 String roleId=userService.getRoleByName(userName);
 	    	 List<Integer> list=userService.getRole_Per(roleId);
 	    	 String per_id=userService.getRoleIdByName("读取参数")+"";
