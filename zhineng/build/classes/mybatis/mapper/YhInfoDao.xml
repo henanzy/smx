@@ -549,4 +549,7 @@
 	<update id="updateYhlb">
 	update T_YhInfo set Yhfl=#{Yhfl} where ValAd=#{ValAd}
 	</update>
+	<update id="updateBz">
+	update T_YhInfo set bz=#{Bz} where id=#{id}
+	</update>
 </mapper>

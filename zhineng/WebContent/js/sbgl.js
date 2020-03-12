@@ -42,7 +42,11 @@ $(document).ready(function(){
 			arr1[21] = json[i].QgID;
 			arr1[22] =json[i].Telephone;
 			arr1[23] =json[i].yhfl;
-		
+			if(json[i].Bz==null){
+				arr1[24] =" "
+			}else{
+				arr1[24] =json[i].Bz;
+			}
 			
 			shebList.push(arr1);
 		};
@@ -450,7 +454,12 @@ $("#sel_zdjk").click(function(){
 					arr1[21] = json[i].QgID;
 					arr1[22] =json[i].Telephone;
 					arr1[23] =json[i].yhfl;
-				
+					if(json[i].Bz==null){
+						arr1[24] =" "
+					}else{
+						arr1[24] =json[i].Bz;
+					}
+					
 					compareWordList.push(arr1);
 				};
 				shebList=compareWordList;		
@@ -483,7 +492,10 @@ $("#sel_zdjk").click(function(){
 	$("#change_word_btn").click(function(){
 		xin_change(this);
 	});
-
+	$("#tjBz").click(function(){
+		console.log("111111")
+		xin_change1(this);
+	});
 	/*//修改按钮
 	$(".xinjgd_change").click(function(){
 		xin_change(this);
@@ -491,6 +503,7 @@ $("#sel_zdjk").click(function(){
 	//关闭新增
 	$(".close").click(function(){
 		$("#change_word").hide();
+		$("#increase_word").hide();
 	});
 $("#search_btn").click(function(){
 	search(1);
@@ -619,7 +632,7 @@ function tbodydis(oldlist,newlist,page){
 				$("#tdxq").removeClass("none");
 				$("#tdld").removeClass("none");
 				$("#tddy").removeClass("none");
-				for (var j = 0 ; j <newlist[i].length-1 ; j ++) {
+				for (var j = 0 ; j <newlist[i].length ; j ++) {
 					if(j==2&&xqflag!=0){
 						html += "<td style='display:none;'>" + newlist[i][j] + "</td>";
 						$("#tdxq").addClass("none");
@@ -713,7 +726,24 @@ function xin_change(p){
 		$("#change_word .change_word_input")[2].value = CjqWz;
 		$("#change_word .change_word_input")[3].value = cjqTime;
 }
-
+function xin_change1(p){
+	$("#increase_word").show();
+	  var ckbs=$("#sheb_body input[type=checkbox]:checked");
+		if(ckbs.length==0){
+			alert("请选择要修改的用户");
+			return false;
+		}
+		if(ckbs.length>1){
+			alert("对不起一次只能修改一个");
+			return false;
+		}
+		var id=ckbs.val();
+		var Bz=ckbs.parent().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().text();
+		
+		$("#increase_word .increase_word_input")[0].value = id;
+		$("#increase_word .increase_word_input")[1].value = Bz;
+	
+}
 function compareWord(xq,ld,dy,hh,compareWordList){
 
 	var json;
@@ -761,7 +791,11 @@ function compareWord(xq,ld,dy,hh,compareWordList){
 		arr1[21] = json[i].QgID;
 		arr1[22] =json[i].Telephone;
 		arr1[23] =json[i].yhfl;
-	
+		if(json[i].Bz==null){
+			arr1[24] =" "
+		}else{
+			arr1[24] =json[i].Bz;
+		}
 		compareWordList.push(arr1);
 	};
 

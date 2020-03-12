@@ -289,5 +289,11 @@ public class YhInfoServiceImpl implements YhInfoService{
 		return yhnfoDao.findzdjk(yhlb);
 	}
 
+	@Override
+	public void updateBz(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		 yhnfoDao.updateBz(map);
+	}
+
 	
 }

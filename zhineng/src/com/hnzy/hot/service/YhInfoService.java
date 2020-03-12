@@ -96,4 +96,5 @@ public interface YhInfoService {
 	public List<Map<String,String>> findHistoryTop(@Param("xqName")String xqName,@Param("buildNo")Integer buildNo,@Param("cellNo")Integer cellNo,@Param("HouseNo")Integer HouseNo,@Param("startTime")String startTime,@Param("endTime")String endTime);
 	public void updateYhlb(Map<String, Object> map);
 	public List<Map<String,String>>findzdjk(String yhlb);
+	public void updateBz(Map<String, Object> map);
 }

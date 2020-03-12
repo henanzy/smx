@@ -322,7 +322,7 @@ ul.ac_kf li a:hover {
 							<li><a class="taglist" onclick="jizqxx()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;集中器信息</a></li>
 							
 							
-							 <li><a class="taglist" onclick="cgqdz()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;传感器地址</a></li> 
+							  	<li><a class="taglist" onclick="cgqdz()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;传感器地址</a></li> 
 							
 
 						</ul></li>
@@ -435,7 +435,7 @@ ul.ac_kf li a:hover {
 					});
 		    });
 	}
-	console.log(type)
+	
 		$(".ac_kf li a").click(function(){
 			$(".ac_kf li a").css("cssText","color:#fff !important;");
 			$(this).css("cssText","color:#C5D52B !important;");

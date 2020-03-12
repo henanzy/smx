@@ -482,6 +482,7 @@ function isIntNum(){
                                          <button type="button" id="df" class="mws-button black" >读阀</button>&nbsp;
                                          <button type="button"id="dcgq"  class="mws-button black" >读传感器地址</button>&nbsp;
                            				 <button type="button"id="change_word_btn"  class="mws-button black" >修改采集器安装时间</button>&nbsp;
+                           				 <button type="button" id="tjBz" class="mws-button black"  >添加备注</button>&nbsp;
                            				 <select id="yhlb">
                            				 <option value="重点监控">重点监控</option>
                            				 <option value="退费停暖">退费停暖</option>
@@ -526,19 +527,20 @@ function isIntNum(){
 						            <th class="table-th-css">室温<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">管温<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">锁定<span class="span-up"></span> <span class="span-down"></span></th>
-						             <th class="table-th-css">采集器安装时间<span class="span-up"></span> <span class="span-down"></span></th>
+						            <th class="table-th-css">采集器安装时间<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">更新时间<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">阀门地址<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">传感器地址<span class="span-up"></span> <span class="span-down"></span></th>
 						          
 						            <th class="table-th-css">安装位置<span class="span-up"></span> <span class="span-down"></span></th>
-						               <th class="table-th-css">用户卡号<span class="span-up"></span> <span class="span-down"></span></th>
-						                 <th class="table-th-css">调节周期<span class="span-up"></span> <span class="span-down"></span></th>
+						            <th class="table-th-css">用户卡号<span class="span-up"></span> <span class="span-down"></span></th>
+						            <th class="table-th-css">调节周期<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">设定温度<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">设定参数<span class="span-up"></span> <span class="span-down"></span></th>
 						            <th class="table-th-css">区管ID<span class="span-up"></span> <span class="span-down"></span></th>
-						             <th class="table-th-css">电话号码<span class="span-up"></span> <span class="span-down"></span></th>
-						           
+						            <th class="table-th-css">电话号码<span class="span-up"></span> <span class="span-down"></span></th>
+						            <th class="table-th-css">用户分类<span class="span-up"></span> <span class="span-down"></span></th> 
+						            <th class="table-th-css">备注<span class="span-up"></span> <span class="span-down"></span></th>
                                    </tr>
                             </thead>
 					<tbody id="sheb_body" >
@@ -610,6 +612,36 @@ function isIntNum(){
 						<input type="button" id="word_change_btn"
 							class="mws-button black" value="修改" />
 							</form>
+				</div>
+			</div>
+		</div>
+		<div id="increase_word">
+			<div class="mws-panel grid_4"
+				style="width: 200px; min-width: 500px; margin: 20px 30%;">
+				<div class="mws-panel-header">
+					<span class="mws-i-24 i-pencil">增加备注</span> <span class="close"></span>
+				</div>
+				<div class="mws-panel-body" style="height: 150px;">
+					<form class="mws-form" id="insert" action="UpdateYh.action" method="post">
+					 <input type="hidden" class="mws-textinput increase_word_input"
+							name="id" id="id" value="" />
+						<div class="mws-form-inline">
+						
+						
+							<div class="mws-form-row">
+								<label>&emsp;备注：</label>
+
+								<div class="mws-form-item large">
+									<input type="text" class="mws-textinput increase_word_input" 
+										name="Bz" value="" autofocus="autofocus" />
+								</div>
+							</div>
+							
+
+						</div>
+						<input type="submit" id="word_increase_btn" 
+							class="mws-button black" value="修改" />
+					</form>
 				</div>
 			</div>
 		</div>

@@ -87,6 +87,21 @@ public class sbglController {
 			json.put("list",list);
 			return json;
 		}
+	    @RequestMapping("UpdateYh")
+		
+		public String UpdateYh(String Bz,String id){
+			
+		Map<String, Object> map =new  HashMap<String, Object>();
+	
+		map.put("id", id);
+		map.put("Bz", Bz);
+		System.out.println(id);
+		System.out.println(Bz);
+		yhInfoService.updateBz(map);
+		
+			return "redirect:shebgl.action";
+			
+		}
 		@RequestMapping("findzdjk")
 		@ResponseBody
 		public JSONObject findzdjk(String yhlb) throws UnsupportedEncodingException{
