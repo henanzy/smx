@@ -6,10 +6,19 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);      
     return(localhostPaht+projectName);  
 } 
+function remove(){      
+	
+	$("#progressBar").show();                                    
+} 
+function hid(){      
+	
+	$("#progressBar").hide();
+} 
 var xqflag=0;
 var ldflag=0;
 var dyflag=0;
 $(document).ready(function(){
+	
 	var shebList = [];
 	$("#qx").click(function(){
 		                $("tbody input[name='check']").prop("checked",this.checked);//监测在tbody标签下input名为select的是否被勾选
@@ -98,6 +107,8 @@ $(document).ready(function(){
              		              
 	});
 	$("#kf").click(function(){
+		var flag=0;
+		
 			 $('input[name="check"]:checked').each(function (index, item) {
 				 var row=$(this).parent("td").parent("tr");
 				 var td = row.find("td");
@@ -119,22 +130,37 @@ $(document).ready(function(){
 			                      success: function (data) {
 			                    	   if(data.js=="0"){
 			                    		  
-			                    		   alert("开阀成功");
+			                    		   if($("#qx").prop("checked") == false) {
+			                    			   alert("开阀成功");
+			                    		   }
 			                    		   var page=$("#currentNum").html();
 			                    		    search(page);
 			                    	   }else if(data.js=="5"){
-			                    		   alert("请重新登录")
+			                    		    flag=5;
+			                    		  
 			                    	   }else if(data.js=="error"){
-			                    		   alert("您没有相应权限")
+			                    		   flag=2
+			                    		  
 			                    	   }else{
-			                    		   alert("开阀失败 ")
+			                    		   if($("#qx").prop("checked") == false) {
+			                    			   alert("开阀失败");
+			                    		   }
 			                    		    var page=$("#currentNum").html();
 			                    		   search(page);
 			                    	   }
 			                     },
 			  
 			                 })
-			                
+			                 if(flag==5){
+			        			 alert("请重新登录");
+			        			 
+			        			 return ture;
+			        		 }
+				          if(flag==2){
+				        	  alert("您没有相应权限")
+			        			 
+			        			 return ture;
+			        		 }
 			                 
 				    });			 
              		              
@@ -142,6 +168,8 @@ $(document).ready(function(){
 	
 	$("#df").click(function(){
 		var flag=0;
+		remove();
+		$("#progressBar").show();
 		 $('input[name="check"]:checked').each(function (index, item) {
 			 var row=$(this).parent("td").parent("tr");
 			 var td = row.find("td");
@@ -159,8 +187,10 @@ $(document).ready(function(){
       					"qgId":qgid,
       					
       				},
+      			 
                      dataType: "json",
                       success: function (data) {
+                    	  
                     	   if(data.js=="0"){
                     		   if($("#qx").prop("checked") == false) {
                     			   alert("读阀成功");
@@ -179,7 +209,7 @@ $(document).ready(function(){
                     		    search(page);
                     	   }
                      },
-  
+                     
                  })
 				
                  if(flag==5){
@@ -189,10 +219,11 @@ $(document).ready(function(){
         		 }   
 		                 
 			    });			 
-		 
+		 hid();	
 });
 
 	$("#gf").click(function(){
+		var flag=0;
 		 $('input[name="check"]:checked').each(function (index, item) {
 			 var row=$(this).parent("td").parent("tr");
 			 var td = row.find("td");
@@ -210,25 +241,36 @@ $(document).ready(function(){
 		                     dataType: "json",
 		                      success: function (data) {
 		                    	   if(data.js=="0"){
-		                    		   
-		                    		   alert("关阀成功");
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("关阀成功");
+		                    		   }	 
+		                    		  
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }else if(data.js=="5"){
-		                    		   alert("请重新登录")
-		                    		   return;
+		                    		  flag=5
 		                    	   }else if(data.js=="error"){
-		                    		   alert("您没有相应权限")
-		                    		   return;
+		                    		   flag=2
 		                    	   }else{
-		                    		   alert("关阀失败 ")
+		                    		   if($("#qx").prop("checked") == false) {
+		                    			   alert("关阀失败");
+		                    		   }
 		                    		   var page=$("#currentNum").html();
 		                    		    search(page);
 		                    	   }
 		                     },
 		  
 		                 })
-		                 
+		                 if(flag==5){
+		        			 alert("请重新登录");
+		        			 
+		        			 return ture;
+		        		 }
+			          if(flag==2){
+			        	  alert("您没有相应权限")
+		        			 
+		        			 return ture;
+		        		 }
 			    });			 
      		              
 });
@@ -493,7 +535,7 @@ $("#sel_zdjk").click(function(){
 		xin_change(this);
 	});
 	$("#tjBz").click(function(){
-		console.log("111111")
+		
 		xin_change1(this);
 	});
 	/*//修改按钮
@@ -727,7 +769,7 @@ function xin_change(p){
 		$("#change_word .change_word_input")[3].value = cjqTime;
 }
 function xin_change1(p){
-	$("#increase_word").show();
+	
 	  var ckbs=$("#sheb_body input[type=checkbox]:checked");
 		if(ckbs.length==0){
 			alert("请选择要修改的用户");
@@ -737,6 +779,7 @@ function xin_change1(p){
 			alert("对不起一次只能修改一个");
 			return false;
 		}
+		$("#increase_word").show();
 		var id=ckbs.val();
 		var Bz=ckbs.parent().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().text();
 		

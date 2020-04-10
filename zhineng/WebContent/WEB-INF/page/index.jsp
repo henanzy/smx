@@ -213,14 +213,7 @@
                     </div>
                 </div>
                 
-                <div class="mws-form-row">
-                	<div class="mws-form-item large">
-                    	<select id="type" name="type" class="mws-login-username mws-textinput">
-                    	<!-- <option value="qyyh">企业用户</option>
-                    	<option value="jtyh">集团用户</option> -->
-                    	</select>
-                    </div>
-                </div>
+                
                 
                
                 
@@ -242,7 +235,7 @@ function getRootPath(){
     var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);      
     return(localhostPaht+projectName);  
 } 
-$.ajax({
+/* $.ajax({
 	url :  getRootPath()+"/user/getRole.action", 
 	async : false,
 	dataType : "json",
@@ -261,6 +254,6 @@ $.ajax({
 		}
 	
 	}
-});
+}); */
 </script>
 </html>

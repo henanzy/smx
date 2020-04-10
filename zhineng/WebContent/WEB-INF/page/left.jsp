@@ -222,6 +222,15 @@ function hfjl(){
 function role(){// 
     window.open("<%=basePath%>ZskCon/role.action","Conframe");
 }
+function qgdr(){// 
+    window.open("<%=basePath%>jzq/qgdr.action","Conframe");
+}
+function jzqdr(){// 
+    window.open("<%=basePath%>jzq/jzqdr.action","Conframe");
+}
+function sjsd(){// 
+    window.open("<%=basePath%>XtszCon/sjsd.action","Conframe");
+}
 		</script>
 
 <style>
@@ -323,6 +332,26 @@ ul.ac_kf li a:hover {
 							
 							
 							  	<li><a class="taglist" onclick="cgqdz()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;传感器地址</a></li> 
+							
+
+						</ul></li>
+				</c:if>
+				<c:if test="${fl=='nhjk'}">
+					<li class="active"><a href="#"
+						class="mws-i-24 i-address-book-2">系统设置</a>
+						<ul class="ac_kf">
+						    <li><a class="taglist" onclick="sjsd()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;时间设定</a></li>
+						   
+							
+
+						</ul></li>
+				</c:if>
+				<c:if test="${fl=='nhjk'}">
+					<li class="active"><a href="#"
+						class="mws-i-24 i-address-book-2">信息导入</a>
+						<ul class="ac_kf">
+						    <li><a class="taglist" onclick="qgdr()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;区管导入</a></li>
+						     <li><a class="taglist" onclick="jzqdr()" target="Conframel">&nbsp;&nbsp;&nbsp;&nbsp;集中器导入</a></li>
 							
 
 						</ul></li>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hnzy.hot.dao.XtxzDao">
+	<resultMap id="XtszMap" type="java.util.HashMap"></resultMap>
+	 <select id="find" resultMap="XtszMap">
+		SELECT 
+      xqm,ldh ,
+    MAX(CASE num WHEN '1' THEN date else 0 end)AS 'date1',
+     MAX (CASE num WHEN '2' THEN date else 0 end) AS 'date2',
+     MAX (CASE num WHEN '3' THEN date else 0 end) AS 'date3',
+     MAX (CASE num WHEN '4' THEN date else 0 end) AS 'date4',
+	 MAX (CASE num WHEN '5' THEN date else 0 end) AS 'date5',
+	 MAX (CASE num WHEN '6' THEN date else 0 end) AS 'date6',
+	 MAX (CASE num WHEN '7' THEN date else 0 end) AS 'date7',
+	 MAX (CASE num WHEN '8' THEN date else 0 end) AS 'date8'
+FROM t_dskg where 1=1
+<if test="xqm!=null and xqm!=''">
+	     and xqm=#{xqm}
+        </if>
+        <if test="ldh!=null and ldh!=''">
+	     and ldh=#{ldh}
+        </if>
+GROUP BY xqm,ldh 
+		
+	</select> 
+	
+	
+	<insert id="Insert" >
+		insert into T_dskg
+		(xqm,ldh,flag,date,num)
+		values(#{xqm},#{ldh},#{flag},#{date},#{num})
+	</insert>
+	
+	<update id="Update">
+		update T_dskg set
+		date=#{date},flag=#{flag}
+		where xqm=#{xqm} and ldh=#{ldh}  and num=#{num}
+	</update>
+	
+	<!-- <delete id="Delete" >
+		delete from T_QgInfo
+		where
+		ID=#{id}
+	</delete> -->
+	<select id="finddate" resultType="java.lang.String">
+		select date from T_dskg where xqm=#{xqm} and ldh=#{ldh}  and num=#{num}
+	</select>
+	<select id="findLd" resultType="java.lang.String" >
+		select distinct BuildNo from T_YhInfo where XqName=#{xqm} order by BuildNo
+
+	</select>
+</mapper>

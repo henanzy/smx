@@ -31,7 +31,7 @@ public class UserController {
 	private YhInfoService yhServer;
 	@ResponseBody
 	@RequestMapping("/login")
-	public JSONObject login(HttpSession session,String username,String password,String type,HttpServletRequest request) throws UnsupportedEncodingException{
+	public JSONObject login(HttpSession session,String username,String password,HttpServletRequest request) throws UnsupportedEncodingException{
 		JSONObject jsonObject= new JSONObject();
 		if (StringUtil.isNoEmpty(username) && StringUtil.isNoEmpty(password)) {
 			username=new String(username.getBytes("ISO-8859-1"),"utf-8")+"";
@@ -39,18 +39,15 @@ public class UserController {
 			password=MD5Util.string2MD5(password);
 			
 			User info = userServer.findUserByNameAndMD5(username, password);			
-			if(info!=null){
+			if(info!=null){				
 				
-				if(type.equals(userServer.getRoleByName(username))){
-					request.getSession().setAttribute("admins", info);
-					request.getSession().setAttribute("UserName", info.getUserName());
+					
+					request.getSession().setAttribute("UserName", username);
 					request.getSession().setAttribute("PassWord", info.getPassword());
 					request.getSession().setAttribute("ID", info.getId());
-					request.getSession().setAttribute("type", userServer.getRoleName(type));
-					request.getSession().setAttribute("role", type);
-					if(type.equals("qyyh")){
-						request.getSession().setAttribute("gs", type);
-					}else{
+					request.getSession().setAttribute("type", userServer.getRoleName(userServer.getRoleByName(username)));
+					request.getSession().setAttribute("role", userServer.getRoleByName(username));
+				
 						String str ="";
 						List<String> list =userServer.getgs();
 						for (int i = 0; i < list.size(); i++) {
@@ -63,16 +60,14 @@ public class UserController {
 						}
 						
 						request.getSession().setAttribute("gs", str);
-					}
+					
 					request.getSession().setAttribute("ssgs", info.getSsgs());
 					jsonObject.put("msg","0");
-				}
-				else{
-					jsonObject.put("msg", "2"); 
+				
 				}
 				
 			
-		}else {
+		else {
 
 				jsonObject.put("msg", "1"); 
 			}
@@ -80,6 +75,7 @@ public class UserController {
 		}
 		return jsonObject;
 	}
+	
 	
 	@RequestMapping("updapwd")
 	@ResponseBody

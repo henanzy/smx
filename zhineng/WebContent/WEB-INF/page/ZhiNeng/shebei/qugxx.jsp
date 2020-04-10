@@ -257,19 +257,22 @@ $.ajax({
 
 </script>
 <body>
+
     <div id="" class="clearfix">
       
             	<div class="mws-report-container clearfix" style="margin:1px;">
-            
-            	
+                                   	
                    	 <p class="mws-report" href="#" style="font-size: 14px;"> 
-                    	
+                    
+                    
                         <span class="mws-report-content" style="margin-top: 5px;">
+                        
                                                         选择小区：
 						<select id="xq" style="width:90px"
 						name="xqName">
 						
 					</select>
+					
 					 <input type="submit" id="search_btn" style="height:35px" class="mws-button black"  value="查询"/>
 					
 					<br/><br/>
@@ -279,7 +282,8 @@ $.ajax({
                         <button type="submit" class="mws-button black"  id="pldf" > 批量读阀</button>
                         <button type="submit" class="mws-button black"  id="plkf" >批量开阀 </button>
                         <button type="submit" class="mws-button black"  id="plgf" >批量关阀 </button>
-	                    <button type="submit" class="mws-button black"  id="increase_btn" >添加" </button> 
+	                    <button type="submit" class="mws-button black"  id="increase_btn" >添加</button> 
+	                    
 	                    <button type="submit" id="export_btn" class="mws-button black" > 导出 </button>                                                 
                          
                           	调节周期 <input type="text" id="wdsd" name="wdsd" size="5" value="6"/>

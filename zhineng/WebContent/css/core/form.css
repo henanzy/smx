@@ -368,9 +368,9 @@
 	cursor:pointer;
 	background:#e0e0e0 url(../../images/core/mws-file-btn.png) no-repeat center center;
 	color:#666666;
-	height:28px;
+	/* height:28px; */
 	border:1px solid #ababab;
-	margin-left:-80px;
+	/* margin-left:-80px; */
 	text-align:center;
 	
 	/* CSS 3 */

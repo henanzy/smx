@@ -349,7 +349,41 @@ input{
 	-khtml-border-radius: 6px;
 	border-radius: 6px;
 }
-
+.background { 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    opacity: 0.4; 
+    filter: alpha(opacity=40); 
+    background:while; 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 2000; 
+} 
+.progressBar { 
+    border: solid 2px #86A5AD; 
+   
+} 
+.pro{
+display: none;
+}
+.progressBar { 
+   /*  display: block;  */
+    width: 160px; 
+    height: 28px; 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    margin-left: -74px; 
+    margin-top: -14px; 
+    padding: 10px 10px 10px 50px; 
+    text-align: left; 
+    line-height: 27px; 
+    font-weight: bold; 
+    position: absolute; 
+    z-index: 2001; 
+} 
 nav li,
 	select{
 		height:24px;
@@ -411,6 +445,7 @@ function isIntNum(){
 </script>
 
 <body >
+<div id="progressBar" class="progressBar pro" >数据加载中，请稍等...</div> 
     <div id="" class="clearfix">
       
             	<div class="mws-report-container clearfix" style="margin:1px;">

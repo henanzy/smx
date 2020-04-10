@@ -1,18 +1,24 @@
 package com.hnzy.hot.controller;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hnzy.hot.service.JzqService;
+import com.hnzy.hot.service.QgService;
 import com.hnzy.hot.service.UserService;
 
 import net.sf.json.JSONObject;
@@ -23,6 +29,8 @@ import net.sf.json.JSONObject;
 public class JzqController {
 	@Autowired
 	private JzqService jzqService;
+	@Autowired
+	private QgService qgService;
 	@Autowired
 	private UserService userService;
 	@RequestMapping("/jizqxx")
@@ -132,5 +140,65 @@ public JSONObject Delete(HttpSession session,String id){
 	
 	jzqService.Delete(id);
 	return json;
+}
+@RequestMapping("/qgdr")
+public String qgdr(HttpSession session){
+	
+	return "ZhiNeng/shebei/qgdr";
+}
+@RequestMapping("read")
+public String impotr(HttpServletRequest request,HttpSession session, Model model) throws Exception {
+int adminId = 1;
+//获取上传的文件
+MultipartHttpServletRequest multipart = (MultipartHttpServletRequest) request;
+MultipartFile file = multipart.getFile("Importfile");
+
+if(file.getSize()>0){
+//数据导入
+	 
+	 String UserName=(String) session.getAttribute("UserName");
+	 if(UserName!=null){
+		 InputStream in = file.getInputStream();
+		 qgService.importExcelInfo(UserName,in,file,adminId);
+		 in.close();
+	 }else{
+		 return "faile";
+	 }
+	
+	return "Excelsuccess";
+}else{
+	 return "faile";
+}
+}
+
+@RequestMapping("/jzqdr")
+public String jzqdr(HttpSession session){
+	
+	return "ZhiNeng/shebei/jzqdr";
+}
+
+@RequestMapping("readjzq")
+public String readjzq(HttpServletRequest request,HttpSession session, Model model) throws Exception {
+int adminId = 1;
+//获取上传的文件
+MultipartHttpServletRequest multipart = (MultipartHttpServletRequest) request;
+MultipartFile file = multipart.getFile("Importfile");
+
+if(file.getSize()>0){
+//数据导入
+	 
+	 String UserName=(String) session.getAttribute("UserName");
+	 if(UserName!=null){
+		 InputStream in = file.getInputStream();
+		 jzqService.importExcelInfo(UserName,in,file,adminId);
+		 in.close();
+	 }else{
+		 return "faile";
+	 }
+	
+	return "Excelsuccess";
+}else{
+	 return "faile";
+}
 }
 }
